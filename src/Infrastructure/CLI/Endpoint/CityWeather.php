@@ -18,7 +18,6 @@ final readonly class CityWeather
     {
         $weatherApp = new WeatherApp();
         $this->ui->writeNewLine($weatherApp->getIntroduction());
-        $weatherApp->setCity($this->ui->readInput());
-        $this->ui->writeNewLine($weatherApp->getResult());
+        $this->ui->writeNewLine($weatherApp->getResult($this->ui->readInput()));
     }
 }

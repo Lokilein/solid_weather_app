@@ -6,7 +6,6 @@ namespace Lokil\SolidWeatherApp\Application;
 
 final class WeatherApp
 {
-    private ?string $city = null;
 
     public function getIntroduction(): string
     {
@@ -16,33 +15,15 @@ final class WeatherApp
     /**
      * @throws \Exception
      */
-    public function setCity(string $city): void
+    public function getResult(string $city): string
     {
-        if(empty($city)) {
-            throw new \Exception('No valid city to set');
-        }
-        $this->city = $city;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function getResult(): string
-    {
-        if($this->city === null) {
-            throw new \Exception('No city set');
-        }
-
-        $result = strtr(
+        return strtr(
             'Das Wetter in der Stadt %city: %weather. Es ist %temperature',
             [
-                '%city' => $this->city,
+                '%city' => $city,
                 '%weather' => 'A',
                 '%temperature' => 'B'
             ]
         );
-
-        $this->city = null;
-        return $result;
     }
 }
