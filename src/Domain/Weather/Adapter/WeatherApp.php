@@ -4,27 +4,45 @@ declare(strict_types=1);
 
 namespace Lokil\SolidWeatherApp\Domain\Weather\Adapter;
 
-
-use Lokil\SolidWeatherApp\Domain\Weather\Port\UIInterface;
-
 final class WeatherApp
 {
-    public function __construct(private readonly UIInterface $ui)
-    {
+    private ?string $city = null;
 
-    }
-    public function do(): void
+    public function getIntroduction(): string
     {
-        $this->ui->writeNewLine('Von welcher Stadt soll das Wetter angezeigt werden?');
-        $city = trim($this->ui->readInput());
-        $output = strtr(
+        return 'Von welcher Stadt soll das Wetter angezeigt werden?';
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function setCity(string $city): void
+    {
+        if(empty($city)) {
+            throw new \Exception('No valid city to set');
+        }
+        $this->city = $city;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function getResult(): string
+    {
+        if($this->city === null) {
+            throw new \Exception('No city set');
+        }
+
+        $result = strtr(
             'Das Wetter in der Stadt %city: %weather. Es ist %temperature',
             [
-                '%city' => $city,
+                '%city' => $this->city,
                 '%weather' => 'A',
                 '%temperature' => 'B'
             ]
         );
-        $this->ui->writeNewLine($output);
+
+        $this->city = null;
+        return $result;
     }
 }
