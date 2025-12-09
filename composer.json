@@ -1,0 +1,19 @@
+{
+    "name": "lokil/solid_weather_app",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lokil\\SolidWeatherApp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lokilein",
+            "email": "lokilein.sb@googlemail.com"
+        }
+    ],
+    "require": {}
+}
