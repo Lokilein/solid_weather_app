@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Lokil\SolidWeatherApp\Infrastructure\CLI\Endpoints;
 
 use Lokil\SolidWeatherApp\Domain\Weather\Adapter\WeatherApp;
-use Lokil\SolidWeatherApp\Infrastructure\CLI\CLITools;
+use Lokil\SolidWeatherApp\Infrastructure\CLI\UIAccess;
 
 final class WeatherCLI
 {
-    public function __construct(private readonly CLITools $ui)
+    public function __construct(private readonly UIAccess $ui)
     {
 
     }

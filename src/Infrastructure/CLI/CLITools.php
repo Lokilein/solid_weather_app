@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lokil\SolidWeatherApp\Infrastructure\CLI;
 
 
-final class CLITools
+final class CLITools implements UIAccess
 {
     public function readInput(): string
     {
