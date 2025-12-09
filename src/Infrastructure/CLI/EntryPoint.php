@@ -7,7 +7,7 @@ class EntryPoint
 {
     public function do(): void
     {
-        error_log("nicht?0");
-        echo 'Hello World!';
+        $cliTools = new CliTools();
+        $cliTools->writeLineBreak("Hello World!");
     }
 }
