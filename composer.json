@@ -15,5 +15,7 @@
             "email": "lokilein.sb@googlemail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.10"
+    }
 }
