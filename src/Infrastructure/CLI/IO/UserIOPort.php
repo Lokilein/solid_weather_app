@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lokil\SolidWeatherApp\Infrastructure\CLI;
+namespace Lokil\SolidWeatherApp\Infrastructure\CLI\IO;
 
-interface UIAccess
+interface UserIOPort
 {
     public function readInput(): string;
 

@@ -10,7 +10,10 @@ final class Start
 {
     public static function run(): void
     {
-        $entryPoint = new EntryPoint();
-        $entryPoint->do();
+        if(php_sapi_name() === 'cli')
+        {
+            $entryPoint = new EntryPoint();
+            $entryPoint->do();
+        }
     }
 }

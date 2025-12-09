@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lokil\SolidWeatherApp\Domain\Weather\Adapter;
+namespace Lokil\SolidWeatherApp\Application;
 
 final class WeatherApp
 {

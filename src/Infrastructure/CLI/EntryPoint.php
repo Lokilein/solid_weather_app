@@ -12,6 +12,6 @@ class EntryPoint
     public function do(): void
     {
         $factory = new WeatherCLIFactory();
-        $factory()->do();
+        $factory()->run();
     }
 }

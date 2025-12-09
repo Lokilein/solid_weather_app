@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lokil\SolidWeatherApp\Infrastructure\CLI;
+namespace Lokil\SolidWeatherApp\Infrastructure\CLI\IO;
 
 
-final class CLITools implements UIAccess
+final class CLIUserIOPort implements UserIOPort
 {
     public function readInput(): string
     {
