@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Lokil\SolidWeatherApp\Application;
 
-use Lokil\SolidWeatherApp\Domain\Model\WeatherData;
+use Lokil\SolidWeatherApp\Application\Port\WeatherRequestPort;
 
 final class WeatherApp
 {
-    public function __construct(private readonly WeatherAPI $weatherAPI)
+    public function __construct(private readonly WeatherRequestPort $weatherAPI)
     {
 
     }
@@ -23,13 +23,13 @@ final class WeatherApp
      */
     public function getResult(string $city): string
     {
-        $data = $this->weatherAPI->getWeather($city);
+        $data = $this->weatherAPI->getWeatherForCity($city);
         return strtr(
             'Das Wetter in der Stadt %city: %weather. Es ist %temperature',
             [
                 '%city' => $data->getCity(),
                 '%weather' =>  $data->getWeather(),
-                '%temperature' => $data->getTemperature()
+                '%temperature' => number_format($data->getTemperatureCelsius(), 1, ',', '.') . '° Celsius',
             ]
         );
     }

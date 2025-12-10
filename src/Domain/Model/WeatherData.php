@@ -8,13 +8,13 @@ final class WeatherData
 {
     private string $city;
     private string $weather;
-    private string $temperature;
+    private float $temperatureCelsius;
 
-    public function __construct(string $city, string $weather, string $temperature)
+    public function __construct(string $city, string $weather, float $temperatureCelsius)
     {
         $this->city = $city;
         $this->weather = $weather;
-        $this->temperature = $temperature;
+        $this->temperatureCelsius = $temperatureCelsius;
     }
 
     public function getCity(): string
@@ -27,9 +27,9 @@ final class WeatherData
         return $this->weather;
     }
 
-    public function getTemperature(): string
+    public function getTemperatureCelsius(): float
     {
-        return $this->temperature;
+        return $this->temperatureCelsius;
     }
 
 
