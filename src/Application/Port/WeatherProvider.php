@@ -7,7 +7,7 @@ namespace Lokil\SolidWeatherApp\Application\Port;
 use Lokil\SolidWeatherApp\Domain\Exception\WeatherNotFetchableException;
 use Lokil\SolidWeatherApp\Domain\Model\WeatherData;
 
-interface WeatherRequestPort
+interface WeatherProvider
 {
     /**
      * Fetches the relevant temperature data

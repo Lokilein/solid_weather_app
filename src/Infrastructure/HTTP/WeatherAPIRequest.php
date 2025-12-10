@@ -6,12 +6,12 @@ namespace Lokil\SolidWeatherApp\Infrastructure\HTTP;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Lokil\SolidWeatherApp\Application\Port\WeatherRequestPort;
+use Lokil\SolidWeatherApp\Application\Port\WeatherProvider;
 use Lokil\SolidWeatherApp\Domain\Exception\WeatherNotFetchableException;
 use Lokil\SolidWeatherApp\Domain\Model\WeatherData;
 use Psr\Http\Message\ResponseInterface;
 
-class WeatherAPIRequest implements WeatherRequestPort
+class WeatherAPIRequest implements WeatherProvider
 {
     public function getWeatherForCity(string $city): WeatherData
     {
@@ -19,7 +19,7 @@ class WeatherAPIRequest implements WeatherRequestPort
         if ($this->isAnswerValid($res)) {
             return $this->convertToModel($res, $city);
         }
-        
+
         throw new WeatherNotFetchableException('Could not access weather of ' . $city . ': ' . $res->getStatusCode());
     }
 

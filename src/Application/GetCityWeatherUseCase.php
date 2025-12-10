@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Lokil\SolidWeatherApp\Application;
 
-use Lokil\SolidWeatherApp\Application\Port\WeatherRequestPort;
+use Lokil\SolidWeatherApp\Application\Port\WeatherProvider;
 
-final readonly class WeatherApp
+final readonly class GetCityWeatherUseCase
 {
-    public function __construct(private WeatherRequestPort $weatherAPI)
+    public function __construct(private WeatherProvider $weatherAPI)
     {
 
     }

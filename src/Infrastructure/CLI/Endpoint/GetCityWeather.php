@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Lokil\SolidWeatherApp\Infrastructure\CLI\Endpoint;
 
-use Lokil\SolidWeatherApp\Application\WeatherApp;
+use Lokil\SolidWeatherApp\Application\GetCityWeatherUseCase;
 use Lokil\SolidWeatherApp\Infrastructure\CLI\IO\UserIOPort;
-use Lokil\SolidWeatherApp\Infrastructure\HTTP\WeatherAPIRequest;
 
 final readonly class GetCityWeather
 {
-    public function __construct(private UserIOPort $ui)
+    public function __construct(private UserIOPort $ui, private GetCityWeatherUseCase $weatherApp)
     {
 
     }
 
     public function run(): void
     {
-        $weatherApp = new WeatherApp(new WeatherAPIRequest());
-        $this->ui->writeNewLine($weatherApp->getIntroduction());
-        $this->ui->writeNewLine($weatherApp->getResult($this->ui->readInput()));
+        $this->ui->writeNewLine($this->weatherApp->getIntroduction());
+        $this->ui->writeNewLine($this->weatherApp->getResult($this->ui->readInput()));
     }
 }
