@@ -8,7 +8,7 @@ use Lokil\SolidWeatherApp\Application\WeatherApp;
 use Lokil\SolidWeatherApp\Infrastructure\CLI\IO\UserIOPort;
 use Lokil\SolidWeatherApp\Infrastructure\HTTP\WeatherAPIRequest;
 
-final readonly class CityWeather
+final readonly class GetCityWeather
 {
     public function __construct(private UserIOPort $ui)
     {

@@ -6,9 +6,9 @@ namespace Lokil\SolidWeatherApp\Application;
 
 use Lokil\SolidWeatherApp\Application\Port\WeatherRequestPort;
 
-final class WeatherApp
+final readonly class WeatherApp
 {
-    public function __construct(private readonly WeatherRequestPort $weatherAPI)
+    public function __construct(private WeatherRequestPort $weatherAPI)
     {
 
     }

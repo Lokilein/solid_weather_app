@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace Lokil\SolidWeatherApp\Domain\Model;
 
-final class WeatherData
+final readonly class WeatherData
 {
-    private string $city;
-    private string $weather;
-    private float $temperatureCelsius;
-
-    public function __construct(string $city, string $weather, float $temperatureCelsius)
+    public function __construct(private string $city, private string $weather, private float $temperatureCelsius)
     {
-        $this->city = $city;
-        $this->weather = $weather;
-        $this->temperatureCelsius = $temperatureCelsius;
     }
 
     public function getCity(): string
