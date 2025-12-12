@@ -7,6 +7,7 @@ namespace Lokil\SolidWeatherApp\Infrastructure\CLI\Factory;
 use Lokil\SolidWeatherApp\Application\GetCityWeatherUseCase;
 use Lokil\SolidWeatherApp\Infrastructure\CLI\IO\CLIUserIOPort;
 use Lokil\SolidWeatherApp\Infrastructure\CLI\Endpoint\GetCityWeather;
+use Lokil\SolidWeatherApp\Infrastructure\EnvironmentReader;
 use Lokil\SolidWeatherApp\Infrastructure\HTTP\WeatherAPIParser;
 use Lokil\SolidWeatherApp\Infrastructure\HTTP\WeatherAPIRequest;
 
@@ -16,6 +17,9 @@ final class GetCityWeatherFactory
     {
         return new GetCityWeather(
             new CLIUserIOPort(),
-            new GetCityWeatherUseCase(new WeatherAPIRequest(new WeatherAPIParser())));
+            new GetCityWeatherUseCase(
+                new WeatherAPIRequest(
+                    new EnvironmentReader(),
+                    new WeatherAPIParser())));
     }
 }

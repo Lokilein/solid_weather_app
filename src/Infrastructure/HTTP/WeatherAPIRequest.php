@@ -7,16 +7,20 @@ namespace Lokil\SolidWeatherApp\Infrastructure\HTTP;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Lokil\SolidWeatherApp\Application\Port\WeatherProvider;
+use Lokil\SolidWeatherApp\Domain\Exception\EnvironmentException;
 use Lokil\SolidWeatherApp\Domain\Exception\WeatherNotFetchableException;
 use Lokil\SolidWeatherApp\Domain\Model\WeatherData;
+use Lokil\SolidWeatherApp\Infrastructure\EnvironmentReader;
 use Psr\Http\Message\ResponseInterface;
 
 class WeatherAPIRequest implements WeatherProvider
 {
-    public function __construct(private readonly WeatherAPIParser $weatherAPIParser) {
+    public function __construct(private readonly EnvironmentReader $environmentReader,
+                                private readonly WeatherAPIParser $weatherAPIParser) {
 
     }
 
+    /** @inheritDoc */
     public function getWeatherForCity(string $city): WeatherData
     {
         $res = $this->executeRequest($city);
@@ -27,22 +31,15 @@ class WeatherAPIRequest implements WeatherProvider
      * @param string $city
      * @return ResponseInterface
      * @throws WeatherNotFetchableException
+     * @throws EnvironmentException
      */
     private function executeRequest(string $city): ResponseInterface
     {
-        $env = parse_ini_file(".env");
-        if($env === false) {
-            throw new WeatherNotFetchableException('Could not found .env file.');
-        }
-        if(!isset($env['WEATHER_API_KEY'])) {
-            throw new WeatherNotFetchableException('Could not found value "WEATHER_API_KEY" in .env file.');
-        }
-
         $client = new Client();
         try {
             $res = $client->request(
                 'GET',
-                'http://api.weatherapi.com/v1/current.json?key=' . $env['WEATHER_API_KEY'] . '&q=' . $city . '&aqi=no' . '&lang=de'
+                'http://api.weatherapi.com/v1/current.json?key=' . $this->environmentReader->getWeatherAPIKey() . '&q=' . $city . '&aqi=no' . '&lang=de'
             );
         } catch (GuzzleException $e) {
             error_log($e->getMessage());

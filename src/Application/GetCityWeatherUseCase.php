@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Lokil\SolidWeatherApp\Application;
 
 use Lokil\SolidWeatherApp\Application\Port\WeatherProvider;
+use Lokil\SolidWeatherApp\Domain\Exception\EnvironmentException;
+use Lokil\SolidWeatherApp\Domain\Exception\WeatherNotFetchableException;
 
 final readonly class GetCityWeatherUseCase
 {
@@ -19,7 +21,8 @@ final readonly class GetCityWeatherUseCase
     }
 
     /**
-     * @throws \Exception
+     * @throws EnvironmentException
+     * @throws WeatherNotFetchableException
      */
     public function getResult(string $city): string
     {
