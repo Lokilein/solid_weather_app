@@ -17,6 +17,7 @@ final readonly class GetCityWeather
     public function run(): void
     {
         $this->ui->writeNewLine($this->weatherApp->getIntroduction());
-        $this->ui->writeNewLine($this->weatherApp->getResult($this->ui->readInput()));
+        $city = $this->ui->readInput();
+        $this->ui->writeNewLine($this->weatherApp->getResult($city));
     }
 }

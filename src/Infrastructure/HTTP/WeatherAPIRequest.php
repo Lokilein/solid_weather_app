@@ -13,14 +13,14 @@ use Psr\Http\Message\ResponseInterface;
 
 class WeatherAPIRequest implements WeatherProvider
 {
+    public function __construct(private readonly WeatherAPIParser $weatherAPIParser) {
+
+    }
+
     public function getWeatherForCity(string $city): WeatherData
     {
         $res = $this->executeRequest($city);
-        if ($this->isAnswerValid($res)) {
-            return $this->convertToModel($res, $city);
-        }
-
-        throw new WeatherNotFetchableException('Could not access weather of ' . $city . ': ' . $res->getStatusCode());
+        return $this->convertToModel($res, $city);
     }
 
     /**
@@ -31,6 +31,12 @@ class WeatherAPIRequest implements WeatherProvider
     private function executeRequest(string $city): ResponseInterface
     {
         $env = parse_ini_file(".env");
+        if($env === false) {
+            throw new WeatherNotFetchableException('Could not found .env file.');
+        }
+        if(!isset($env['WEATHER_API_KEY'])) {
+            throw new WeatherNotFetchableException('Could not found value "WEATHER_API_KEY" in .env file.');
+        }
 
         $client = new Client();
         try {
@@ -39,29 +45,24 @@ class WeatherAPIRequest implements WeatherProvider
                 'http://api.weatherapi.com/v1/current.json?key=' . $env['WEATHER_API_KEY'] . '&q=' . $city . '&aqi=no' . '&lang=de'
             );
         } catch (GuzzleException $e) {
+            error_log($e->getMessage());
             throw new WeatherNotFetchableException('Could not access weather of ' . $city, previous: $e);
         }
         return $res;
-    }
-
-    private function isAnswerValid(ResponseInterface $res): bool
-    {
-        return $res->getStatusCode() === 200
-            && json_validate($res->getBody()->getContents());
     }
 
     /**
      * @param ResponseInterface $res
      * @param string $city
      * @return WeatherData
+     * @throws WeatherNotFetchableException
      */
-    public function convertToModel(ResponseInterface $res, string $city): WeatherData
+    private function convertToModel(ResponseInterface $res, string $city): WeatherData
     {
-        $jsonData = json_decode($res->getBody()->getContents(), true);
         return new WeatherData(
             $city,
-            $jsonData['current']['condition']['text'],
-            $jsonData['current']['temp_c']
+            $this->weatherAPIParser->parseWeatherDescription($res),
+            $this->weatherAPIParser->parseTemperature($res),
         );
     }
 }
